@@ -1,2 +1,27 @@
-# infinite-arts-releases
-無限術式 Android 官方下載與版本更新 / Infinite Arts Android releases
+# 無限術式 · Infinite Arts
+
+輸入一句話創造招式的 Android 奇幻生存遊戲。支援元素、數量、顏色、召喚、變身與多種代表性技能。
+
+## 下載最新版
+
+**[下載 Android APK](https://github.com/107820015/infinite-arts-releases/releases/latest/download/Infinite-Arts.apk)**
+
+[查看最新版本與更新說明](https://github.com/107820015/infinite-arts-releases/releases/latest)
+
+需要 Android 8.0 以上。下載後開啟 APK，依手機系統提示允許安裝。已有遊戲時直接覆蓋安裝，請勿先解除安裝，以保留存檔。
+
+## 遊戲內更新
+
+從 v0.24.0 起，主選單及設定提供「檢查更新」。有新版時可查看說明並點擊下載，下載完成後依 Android 提示安裝。
+
+舊版玩家只需先手動更新至 v0.24.0 一次。之後共用上方固定連結，或在遊戲內檢查即可。
+
+## 玩法
+
+- 先在練習場輸入技能、對假人試招，最多保存五種技能後開始冒險。
+- 左側搖桿移動，右側技能拖曳瞄準放開施放，狀態技能點擊施放。
+- 衝刺可短暫無敵；普攻自動尋找附近敵人。
+- 拾取經驗升級、強化技能，挑戰菁英及 BOSS。
+- 支援繁體／簡體中文、保存進度及最近戰績。
+
+此公開儲存庫提供安裝檔、校驗碼與更新說明。
