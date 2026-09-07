@@ -1,0 +1,62 @@
+name: Build macOS releases
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing draft release tag
+        required: true
+        default: v0.31.0
+permissions:
+  contents: write
+jobs:
+  mac:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: arm64
+            runner: macos-15
+          - arch: x64
+            runner: macos-15-intel
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: ${{ inputs.tag }}
+      ARCH: ${{ matrix.arch }}
+      REPO: ${{ github.repository }}
+      CSC_IDENTITY_AUTO_DISCOVERY: false
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Download reviewed build input
+        run: |
+          gh release download "$TAG" --repo "$REPO" --pattern mac-build-input.zip
+          unzip -q mac-build-input.zip -d game
+      - name: Package native app
+        working-directory: game
+        run: |
+          npm install --ignore-scripts --no-audit --no-fund
+          sips -z 1024 1024 desktop/icon.png >/dev/null
+          npx --no-install electron-builder --mac zip --"$ARCH" --publish never --config.electronVersion=44.2.0 --config.mac.icon=desktop/icon.png --config.directories.output="$RUNNER_TEMP/mac-output"
+      - name: Validate signature and run native save test
+        run: |
+          APP=$(find "$RUNNER_TEMP/mac-output" -maxdepth 2 -name '*.app' -type d | head -1)
+          codesign --verify --deep --strict --verbose=2 "$APP"
+          export APP
+          python3 - <<'PY'
+          import os,subprocess,json,pathlib
+          app=pathlib.Path(os.environ['APP'])
+          report=pathlib.Path(os.environ['RUNNER_TEMP'])/'smoke'
+          subprocess.run([str(app/'Contents/MacOS/無限術式'),'--smoke-test='+str(report)],check=True,timeout=100)
+          result=json.loads((report/'result.json').read_text())
+          assert result['ok'],result
+          print(result)
+          PY
+      - name: Upload verified Mac build
+        run: |
+          cp "$RUNNER_TEMP/mac-output/Infinite-Arts-${TAG#v}-Mac-$ARCH.zip" "Infinite-Arts-Mac-$ARCH.zip"
+          shasum -a 256 "Infinite-Arts-Mac-$ARCH.zip" > "Infinite-Arts-Mac-$ARCH.zip.sha256.txt"
+          cp "$RUNNER_TEMP/smoke/result.json" "Mac-$ARCH-validation.json"
+          gh release upload "$TAG" "Infinite-Arts-Mac-$ARCH.zip" "Infinite-Arts-Mac-$ARCH.zip.sha256.txt" "Mac-$ARCH-validation.json" --repo "$REPO" --clobber
