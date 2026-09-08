@@ -31,7 +31,9 @@ jobs:
           def adb(*args):return subprocess.check_output(['adb',*args],timeout=45)
           def dump():
               adb('shell','uiautomator','dump','/sdcard/window.xml')
-              return ET.fromstring(adb('shell','cat','/sdcard/window.xml'))
+              raw=adb('shell','cat','/sdcard/window.xml')
+              pathlib.Path('android-ui.xml').write_bytes(raw)
+              return ET.fromstring(raw)
           def find(label,timeout=90):
               end=time.monotonic()+timeout
               while time.monotonic()<end:
@@ -41,17 +43,18 @@ jobs:
                           if label in (n.get('text','')+' '+n.get('content-desc','')) and n.get('enabled')=='true':return n
                   except (ET.ParseError,subprocess.SubprocessError):pass
                   time.sleep(2)
-              raise AssertionError('Required game control unavailable')
+              picture('android-failure.png')
+              pathlib.Path('android-logcat.txt').write_bytes(adb('logcat','-d'))
+              raise AssertionError('Required game control unavailable: '+label)
           def tap(n):
               x1,y1,x2,y2=map(int,re.findall(r'\d+',n.get('bounds')))
               adb('shell','input','tap',str((x1+x2)//2),str((y1+y2)//2))
           def launch():adb('shell','am','start','-W','-n',package+'/.MainActivity')
           def picture(name):pathlib.Path(name).write_bytes(adb('exec-out','screencap','-p'))
           adb('install','-r','previous/Infinite-Arts.apk')
-          launch();find('開始新遊戲')
-          adb('shell','am','force-stop',package)
           adb('install','-r','Infinite-Arts.apk')
           adb('logcat','-c');launch()
+          time.sleep(5);picture('android-startup.png')
           installed=adb('shell','dumpsys','package',package).decode(errors='replace')
           assert 'versionName='+os.environ['TAG'].removeprefix('v') in installed
           tap(find('開始新遊戲'));find('自訂技能');picture('android-practice.png')
@@ -85,4 +88,6 @@ jobs:
           name: android-validation
           path: |
             android-*.png
+            android-*.xml
+            android-*.txt
             Android-native-validation.json
