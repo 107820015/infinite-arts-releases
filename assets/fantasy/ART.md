@@ -1,0 +1,47 @@
+# 無限術式：日系 Q 版奇幻素材（v0.23.0）
+
+使用內建 image_gen 生成，未使用 CLI/API fallback。PNG 為專案本機素材，不依賴外部圖片網址。透明圖集於遊戲載入時依格位／明確框選區域拆分並去除透明留白，原始圖集保留。本版仍以單張角色素材配合位移、翻面、晃動、蓄力與受擊效果運作，並非逐格手繪走路動畫。
+
+## 最終素材及生成提示
+
+### characters.png
+Use case: stylized-concept. Production sprite atlas for a top-down Japanese chibi fantasy mobile game. One square 2048x2048 PNG with genuinely transparent alpha background. EXACT 4 columns and 4 rows equal square cells, NO labels, NO grid lines, NO scenery, NO ground, NO shadows, NO UI. One isolated full-body sprite centered inside each cell, entirely within inner 75% of cell leaving generous transparent padding. Every sprite consistent soft painterly cel-shading, crisp dark warm outlines, premium cute Japanese fantasy RPG miniature art, lit upper left, viewed from overhead three-quarter. All humanoids face three-quarter toward right. Row 1 left to right: teal pointed-hat young chibi mage with cream scarf leather boots golden trim crystal wand; mint translucent smiling slime; green goblin spear fighter wearing patched brown leather; silver-grey wolf facing right with bushy tail. Row2: skeleton archer with bow; purple hooded dark sorcerer; red small winged horned imp; ivory skeleton shield guard with rusty sword. Row3: purple mushroom creature with stubby feet; charcoal purple bat wings spread; stocky brown charging boar with tusks; moss-covered hulking stone golem. Row4: goblin shaman in feather headdress holding green totem staff; tiny red-eyed grey rat; red-capped goblin bomber holding round black fuse bomb; ancient gnarled horned treant with leafy crown and amber eyes. Align all feet at 82% cell height, maintain natural aspect ratios, no sprite crosses cell, no text or decorations. Need usable isolated transparent game sprites, NOT a poster. Do not draw background checkerboard.
+
+### environment.png
+Use case: stylized-concept. Create a square transparent PNG production environment sprite atlas for a top-down Japanese chibi fantasy game. EXACT 2 columns by 2 rows, four separate objects, equal square cells. Top-left one rounded leafy green oak tree with detailed twisting short trunk and soft layered foliage, top-right one cluster of grey mossy rocks with clean readable stone facets, bottom-left one roughly circular small turquoise pond with subtle ripples and lily pads, rim of low mossy stones, bottom-right one crumbling ancient stone arch monument overgrown with vines. Each complete isolated object fits entirely within its own cell with 12% transparent margins all sides; no cropping, no overlap across cells. Genuine transparent alpha background, NO checkerboard, no ground plane, no labels, no grid, no shadows outside object. Hand-painted soft cel-shading, crisp warm dark outlines, leafy olive greens, sandstone-grey stone and aquamarine water; lit upper-left, view from nearly overhead three-quarter consistent with an action RPG. Refined illustrated miniature game assets, not photorealistic, not low-poly, not pixel art. Each object completely separate and centered.
+
+### ground.png
+Use case: stylized-concept. One square seamless repeatable ground texture tile for a top-down Japanese chibi fantasy game. Only flat ground seen exactly from above, no objects, no trees, no rocks protruding, no characters, no perspective, no lighting gradient or vignette. Soft hand-painted quiet olive-sage meadow grass with a few patches of muted warm earth and very sparse tiny grass blades and tiny pale flowers. About one third of ground has scattered individual low-contrast worn flat grey sandstone flagstones partially swallowed by moss, irregular sizes and spacing, NOT a straight path, NOT a checkerboard, no visible regular grid. Calm midtone background with broad subtle color variation, enough low-detail areas to keep small game characters and red danger circles readable. Seamless left-right and top-bottom edges. Painterly illustrated game texture, not pixel art, not realistic grass photo. Opaque full bleed, no borders or text. 1024 square.
+
+### companions.png
+Use case: stylized-concept. Production spritesheet for top-down Japanese chibi fantasy game, square PNG genuinely transparent alpha. EXACT 4 columns x4 rows, 16 equal cells, one isolated whole sprite in each, NO text NO labels NO grid NO checkerboard NO background NO ground shadows. Each sprite entirely within inner 80% cell with clear transparent margins. All animals face RIGHT in three-quarter view, slightly overhead. Refined cute hand-painted cel-shading, rich natural colors, clean dark outlines, light upper-left, consistent fantasy RPG miniature style. Row1 left-to-right: orange tabby cat; cream and brown friendly dog; white rabbit long ears; golden-brown hen red comb. Row2: white duck yellow bill; fluffy white sheep; chestnut horse with mane; black and white cow with small horns. Row3: friendly small emerald dragon wings spread; pink domestic pig; orange tiger with black stripes; round brown bear. Row4: brown eagle spread wings; ornate silver flying sword with teal magic trail pointed RIGHT horizontally; straw training dummy tied to wooden crosspost with simple brown burlap tunic and target mark; tiny ornate red healing potion bottle with cork and gold neck. Maintain clear cell separation and consistent foot baseline, natural proportions, high detail legible at game scale, transparent empty cells around objects.
+
+石拱門與藥瓶圖為圖集備用素材；本版未取代互動藥水原有繪製。實際輸出尺寸以 PNG 為準，載入邏輯按比例解析。
+
+
+## Spectral guardian / Susanoo
+Generated with OpenAI imagegen for this game. Transparent violet samurai guardian, horned kabuto, gold eyes, layered amethyst armor, spectral ribcage, empty hands for engine-animated sword; hand-painted cel shading and dark outlines. Tall 2:3 portrait, no scenery/text, designed for a small game entity. Source: susanoo.png. Shared elemental effects are code-drawn cel-shaded cores, tapered trails, faceted crystals and hollow runic wards.
+
+## Painted fireball
+Generated using OpenAI imagegen. Prompt: Production transparent PNG VFX sprite, single hand-painted fantasy fireball travelling right, rounded hot orange head, curling flame tails extending left, Japanese chibi fantasy RPG painterly cel shading, crimson shadows, golden flame ribbons, pale yellow spherical core, subtle brush texture, detached sparks, restrained glow; no text, scenery or characters. 3:2 composition. Source: fireball.png. Engine rotates/scales the sprite and animates its pulse; custom-color variants retain the shared procedural elemental renderer.
+
+
+## Movement and special-technique update
+All additional raster assets were generated with OpenAI imagegen for this project, using the existing characters.png as the visual reference for movement sheets. Gameplay continues to use original collision and damage rules.
+
+- walk-a.png, walk-b.png, walk-c.png: three transparent sheets, each with four columns / five creature rows. Four distinct contact/passing/opposite-contact/passing poses per creature, right-facing, consistent costumes and size. Slimes squash/stretch, quadrupeds trot, humanoids step, imps and bats flap wings. Rows match MovementArt.ts. Runtime row boundaries correct the nonuniform generated row spacing; each row uses a shared crop for stable scale and baseline.
+- spells.png: transparent 3×3 atlas of hand-painted blue spiral orb, violet gravitational vortex, red horned Japanese shrine, ornate black coffin, ice wall, gold clock seal, framed mirror, pink petal blades, lightning sphere. Detailed shadows and selective glow, isolated equal cells, no scenery/UI.
+- elements.png: transparent 3×3 atlas, hand-painted fire, water, ice, wind, earth, lightning, light, shadow and poison projectiles. Each has material-specific curling flames, ripples, crystal facets, wind ribbons, cracked stone, electric branches, radiant light, smoke or bubbling liquid. Custom-color variants retain the procedural palette renderer.
+- mahoraga.png: ivory divine guardian, golden wheel, horned face, white trousers and forearm blade; full-body chibi fantasy sprite on alpha background.
+- fist.png: right-punching clenched human fist with modeled knuckles and thumb, short leather-wrapped wrist, hand-painted cream highlights and warm shadows. No arrows, circles, direction indicators or speed lines. Shared by melee punches, rubber punches, projectiles, charged punches and Black Flash.
+
+Assets are pooled during effect rendering; expired effects hide their pooled images, and graphics destruction releases the pool. Movement timing follows travelled distance for ground creatures and a wing cycle for flying creatures.
+
+
+## VFX v2
+Imagegen atlas prompt: exact 3 x 3 grid, hand-painted fantasy mobile RPG, beam / Excalibur / black-crimson lightning impact / eastern dragon / impact dust / pink door / spear / axe / crescent. Reference: elements.png. Three transparent-export requests returned an RGB preview matte. Original generated file is preserved as vfx-v2.png; FantasyArt applies an edge-connected neutral background key to runtime cells, preserving enclosed highlights, then trims them. Functional range circles remain intentional UI indicators.
+
+
+Items atlas: generated painted red/blue potions, experience crystal, magnet, invincibility star and bomb; 2 × 3 cells. Edited with imagegen to use an opaque white matte, removed at runtime only in edge-connected neutral regions. Original PNG is preserved unchanged.
+
+Hero walk: imagegen four-frame walk cycle based on original blue-hat wizard, white matte removed at runtime. All frames use one shared crop and baseline; PNG source preserved unchanged.
