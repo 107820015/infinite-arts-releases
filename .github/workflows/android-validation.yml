@@ -52,7 +52,8 @@ jobs:
           adb('shell','am','force-stop',package)
           adb('install','-r','Infinite-Arts.apk')
           adb('logcat','-c');launch()
-          find('v'+os.environ['TAG'].removeprefix('v'))
+          installed=adb('shell','dumpsys','package',package).decode(errors='replace')
+          assert 'versionName='+os.environ['TAG'].removeprefix('v') in installed
           tap(find('開始新遊戲'));find('自訂技能');picture('android-practice.png')
           # Resume after the app has been sent to the background.
           adb('shell','input','keyevent','KEYCODE_HOME');launch();find('自訂技能')
