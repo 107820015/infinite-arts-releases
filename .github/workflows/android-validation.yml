@@ -1,0 +1,87 @@
+name: Validate Android release
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing draft release tag
+        required: true
+permissions:
+  contents: write
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: ${{ inputs.tag }}
+      REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Download signed release candidate
+        run: |
+          gh release download "$TAG" --repo "$REPO" --pattern Infinite-Arts.apk
+          mkdir previous
+          gh release download v0.46.0 --repo "$REPO" --pattern Infinite-Arts.apk --dir previous
+          cat > smoke.py <<'PY'
+          import subprocess,time,json,xml.etree.ElementTree as ET,re,pathlib,os
+          package='games.infinitearts.mobile'
+          def adb(*args):return subprocess.check_output(['adb',*args],timeout=45)
+          def dump():
+              adb('shell','uiautomator','dump','/sdcard/window.xml')
+              return ET.fromstring(adb('shell','cat','/sdcard/window.xml'))
+          def find(label,timeout=90):
+              end=time.monotonic()+timeout
+              while time.monotonic()<end:
+                  try:
+                      tree=dump()
+                      for n in tree.iter('node'):
+                          if label in (n.get('text','')+' '+n.get('content-desc','')) and n.get('enabled')=='true':return n
+                  except (ET.ParseError,subprocess.SubprocessError):pass
+                  time.sleep(2)
+              raise AssertionError('Required game control unavailable')
+          def tap(n):
+              x1,y1,x2,y2=map(int,re.findall(r'\d+',n.get('bounds')))
+              adb('shell','input','tap',str((x1+x2)//2),str((y1+y2)//2))
+          def launch():adb('shell','am','start','-W','-n',package+'/.MainActivity')
+          def picture(name):pathlib.Path(name).write_bytes(adb('exec-out','screencap','-p'))
+          adb('install','-r','previous/Infinite-Arts.apk')
+          launch();find('開始新遊戲')
+          adb('shell','am','force-stop',package)
+          adb('install','-r','Infinite-Arts.apk')
+          adb('logcat','-c');launch()
+          find('v'+os.environ['TAG'].removeprefix('v'))
+          tap(find('開始新遊戲'));find('自訂技能');picture('android-practice.png')
+          # Resume after the app has been sent to the background.
+          adb('shell','input','keyevent','KEYCODE_HOME');launch();find('自訂技能')
+          adb('shell','am','force-stop',package);launch();find('開始新遊戲')
+          tap(find('開始新遊戲'));find('自訂技能');picture('android-restart.png')
+          logs=adb('logcat','-d','-s','AndroidRuntime:E').decode(errors='replace')
+          assert 'FATAL EXCEPTION' not in logs
+          report=dict(ok=True,version=os.environ['TAG'].removeprefix('v'),nativeEmulatorTest=True,androidApi=35,upgradeInstall=True,menuReady=True,practiceReady=True,backgroundResume=True,restartReady=True,physicalDeviceTest=False,errors=[])
+          pathlib.Path('Android-native-validation.json').write_text(json.dumps(report,indent=2))
+          print(json.dumps(report))
+          PY
+      - name: Enable emulator acceleration
+        run: sudo chmod 666 /dev/kvm
+      - name: Install, launch, resume and restart Android APK
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          target: google_apis
+          profile: pixel_6
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot
+          script: python3 smoke.py
+      - name: Upload native validation report
+        run: gh release upload "$TAG" Android-native-validation.json --repo "$REPO" --clobber
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-validation
+          path: |
+            android-*.png
+            Android-native-validation.json
