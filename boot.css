@@ -15,13 +15,28 @@
 .boot-footer{position:absolute;bottom:6%;left:5%;width:42%;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 10px;text-align:center;font-size:clamp(11px,1.4vw,17px);letter-spacing:.05em;color:#e8e3c8ed;margin:0}
 .boot-tip-label{display:inline-flex;align-items:center;gap:5px;flex:none;padding-right:10px;border-right:1px solid #d8c08766;color:#e6cc8e;font-family:system-ui,sans-serif;font-size:.82em;font-weight:600;letter-spacing:.16em;line-height:1.3}
 .boot-tip-label svg{width:1em;height:1em;flex:none;opacity:.9}
+.boot-skill-name{color:#fff4c6;font-weight:700;text-shadow:0 1px 3px #092119,0 0 8px #f5d88940}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(min-aspect-ratio:2/1){.boot-scene{background-image:url('./assets/cover/forest-wide.webp')}}
 @media(max-height:350px) and (orientation:landscape){.boot-crest{height:30px;margin-bottom:8px}.boot-status{margin-top:20px}.boot-subtitle{margin:5px 0 10px}.boot-hint{margin-top:8px}.boot-footer{bottom:4%}}
 @media(orientation:portrait){.boot-scene{background-size:auto 65%;background-position:76% top;background-color:#15362a}.boot-scene:before{background:linear-gradient(0deg,#15362a 30%,#15362af0 40%,transparent 72%)}.boot-content{left:7%;width:86%;top:auto;bottom:12%;transform:none}.boot-crest{height:38px;margin-bottom:10px}#boot-screen h1{font-size:clamp(38px,11vw,64px)}.boot-status{margin-top:28px;font-size:19px}.boot-hint{font-size:13px}.boot-footer{left:7%;width:86%;bottom:5%;font-size:11px}.boot-subtitle{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.boot-spinner{animation:none}}
 
-#boot-screen{position:fixed;inset:0;z-index:9000;transition:opacity .4s ease;isolation:isolate}#boot-screen.leaving{opacity:0;pointer-events:none}#boot-screen .boot-spinner{will-change:transform;transform:translateZ(0);animation:boot-spin 1.6s linear infinite} @keyframes boot-spin{from{transform:translateZ(0) rotate(0deg)}to{transform:translateZ(0) rotate(360deg)}}
+#boot-screen{position:fixed;inset:0;z-index:9000;isolation:isolate}#boot-screen .boot-spinner{will-change:transform;transform:translateZ(0);animation:boot-spin 1.6s linear infinite} @keyframes boot-spin{from{transform:translateZ(0) rotate(0deg)}to{transform:translateZ(0) rotate(360deg)}}
 body.booting #app{visibility:hidden}body.booting #update-panel,body.booting #tutorial-panel{z-index:9001}body.booting #web-rotate{display:none!important}#boot-screen button{padding:10px 20px;background:#173b2e;color:#fff0c3;border:1px solid #d7bf7d;border-radius:8px}#boot-screen .boot-retry[hidden]{display:none}
 
 #boot-screen{display:block;margin:0;padding:0;max-width:none;overflow:hidden}#boot-screen .boot-start{position:absolute;inset:0;z-index:3;width:100%;height:100%;max-width:none;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;cursor:pointer;opacity:1}#boot-screen .boot-start:focus-visible{outline:2px solid #ead79c;outline-offset:-8px}#boot-screen .boot-spinner[hidden]{display:none}
+
+/* Cover typography trial: preserve the brand, clarify the start prompt. */
+#boot-screen .boot-subtitle{letter-spacing:.315em;padding-left:.315em}
+#boot-screen .boot-status{font-family:'Microsoft JhengHei',system-ui,sans-serif;font-size:clamp(18px,2.42vw,30px);font-weight:500;letter-spacing:.04em;line-height:1.4}
+#boot-screen .boot-hint{font-family:'Noto Serif TC','PMingLiU',serif;color:#d2c8a6;margin-top:9px;font-weight:400}
+#boot-screen #boot-suggestion{font-family:'Microsoft JhengHei',system-ui,sans-serif;font-weight:400;letter-spacing:.025em}
+#boot-screen .boot-skill-name{font-weight:700}
+@media(orientation:portrait){#boot-screen .boot-status{font-size:21px}}
+
+/* Lift the prompt pair without shifting the title or footer. */
+#boot-screen .boot-status,#boot-screen .boot-hint{transform:translateY(-8px)}
+#boot-screen[aria-busy="false"] #boot-status{animation:boot-start-pulse 2s ease-in-out infinite;will-change:opacity}
+@keyframes boot-start-pulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media(prefers-reduced-motion:reduce){#boot-screen[aria-busy="false"] #boot-status{animation:none;will-change:auto}}
