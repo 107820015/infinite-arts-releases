@@ -4,12 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
     <meta name="description" content="以言語構築力量，創造專屬術式的生存遊戲。" />
-    <link rel="icon" type="image/svg+xml" href="./assets/infinite-sigil.svg" />
+    <link rel="icon" type="image/svg+xml" href="./assets/app-icon.svg" />
     <title>無限術式 · Infinite Arts</title>
-    <script type="module" crossorigin src="./assets/index-_W8n0LG4.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-DQ_OVWdb.css">
-  <meta name="web-build" content="1b2bb68403004635"><meta name="theme-color" content="#102b24"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="./app-icon.png"><link rel="manifest" href="./manifest.webmanifest"></head>
-  <body>
+  <link rel="stylesheet" href="./boot.css">
+    <script type="module" crossorigin src="./assets/index-BzWCn_ZI.js"></script>
+  <meta name="web-build" content="4689e4a4c1bd80ea"><meta name="theme-color" content="#102b24"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="./app-icon.png"><link rel="manifest" href="./manifest.webmanifest"></head>
+  <body class="booting">
+<main id="boot-screen" class="boot-scene" aria-busy="true">
+ <section class="boot-content">
+  <svg class="boot-crest" viewBox="0 0 180 82" fill="none" aria-hidden="true"><g stroke="currentColor" opacity=".55"><path d="M14 70a84 84 0 0 1 152 0M30 67a68 68 0 0 1 120 0M45 65a51 51 0 0 1 90 0M32 25l27 38m89-38-27 38M55 18l13 27m57-27-13 27"/></g><path d="m90 2 7 49 25 10-25 5-7 15-7-15-25-5 25-10Z" fill="#fff0b5" stroke="#e0c47d"/><path d="M90 7v53l-7 5 7-14Z" fill="#bda367"/><circle cx="90" cy="61" r="4" fill="#fff8d4"/></svg>
+  <h1>無限術式</h1><p class="boot-subtitle">INFINITE ARTS</p><div class="boot-rule" aria-hidden="true">✦</div>
+  <p class="boot-status" role="status"><span class="boot-spinner" aria-hidden="true"></span><span id="boot-status">術式準備中…</span></p>
+  <p id="boot-hint" class="boot-hint">正在喚醒術式與森林，請稍候</p>
+ <button class="boot-retry" id="boot-retry" hidden>重新載入</button></section>
+ <p id="boot-suggestion" class="boot-footer"></p>
+</main>
     <div id="app"></div>
 
   </body>
