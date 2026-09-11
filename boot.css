@@ -12,7 +12,9 @@
 .boot-status{margin:34px 0 0;display:flex;justify-content:center;align-items:center;gap:12px;font-size:clamp(16px,2.2vw,27px);font-weight:500;letter-spacing:.09em;color:#fff4d4}
 .boot-spinner{width:19px;height:19px;border:2px solid #dcc78c40;border-top-color:#f8e0a0;border-right-color:#f8e0a0;border-radius:50%;animation:spin 1.6s linear infinite;flex:none}
 .boot-hint{font-size:clamp(12px,1.5vw,18px);line-height:1.7;margin:12px 0 0;color:#e1e4cd;letter-spacing:.05em}
-.boot-footer{position:absolute;bottom:6%;left:5%;width:42%;text-align:center;font-size:clamp(11px,1.4vw,17px);letter-spacing:.12em;color:#e8e3c8d9;margin:0}
+.boot-footer{position:absolute;bottom:6%;left:5%;width:42%;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 10px;text-align:center;font-size:clamp(11px,1.4vw,17px);letter-spacing:.05em;color:#e8e3c8ed;margin:0}
+.boot-tip-label{display:inline-flex;align-items:center;gap:5px;flex:none;padding-right:10px;border-right:1px solid #d8c08766;color:#e6cc8e;font-family:system-ui,sans-serif;font-size:.82em;font-weight:600;letter-spacing:.16em;line-height:1.3}
+.boot-tip-label svg{width:1em;height:1em;flex:none;opacity:.9}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(min-aspect-ratio:2/1){.boot-scene{background-image:url('./assets/cover/forest-wide.webp')}}
 @media(max-height:350px) and (orientation:landscape){.boot-crest{height:30px;margin-bottom:8px}.boot-status{margin-top:20px}.boot-subtitle{margin:5px 0 10px}.boot-hint{margin-top:8px}.boot-footer{bottom:4%}}
