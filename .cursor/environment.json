@@ -1,0 +1,11 @@
+{
+  "name": "Infinite Arts",
+  "install": "bash .cursor/install.sh",
+  "terminals": [
+    {
+      "name": "web",
+      "command": "bash .cursor/serve-web.sh"
+    }
+  ],
+  "ports": [4173]
+}
