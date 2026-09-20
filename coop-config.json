@@ -1,0 +1,10 @@
+{
+  "schema": "infinite-arts-coop-endpoint-v1",
+  "httpsBase": "https://inputs-eight-queen-amazing.trycloudflare.com",
+  "wssBase": "wss://inputs-eight-queen-amazing.trycloudflare.com",
+  "protocol": 5,
+  "buildId": "coop-b4-practice-v2",
+  "rulesetId": "coop-b4-practice-v2",
+  "issuedAt": "2026-09-20T15:45:57.960Z",
+  "expiresAt": "2026-09-27T15:45:57.960Z"
+}
