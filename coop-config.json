@@ -3,8 +3,8 @@
   "httpsBase": "https://coop.infinitearts-game.com",
   "wssBase": "wss://coop.infinitearts-game.com",
   "protocol": 5,
-  "buildId": "coop-b4-practice-v2",
+  "buildId": "coop-b4-practice-v3",
   "rulesetId": "coop-b4-practice-v2",
-  "issuedAt": "2026-09-22T02:03:18.701Z",
-  "expiresAt": "2026-10-22T02:03:18.701Z"
+  "issuedAt": "2026-09-22T06:46:06.480Z",
+  "expiresAt": "2026-10-22T06:46:06.488Z"
 }
