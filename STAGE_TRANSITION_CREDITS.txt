@@ -1,0 +1,8 @@
+Stage transition motion reference
+文字画像APNGメーカー / くま。TRPG WEBツール観測所
+https://kumachansteps.github.io/trpg-web-tools/tools/text-apng-maker/
+
+BATTLE START and STAGE CLEAR are native CSS/DOM reconstructions of the
+user-selected first-version motions. No original APNG, preview video,
+reference screenshot, source-tool code or font file is bundled.
+Text uses fonts available on the user's device, with a generic serif fallback.
