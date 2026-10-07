@@ -1,45 +1,38 @@
-
-@font-face{font-family:CoverSerif;src:url('./assets/cover/title-medium.ttf');font-weight:500}
 #boot-screen *{box-sizing:border-box}
-#boot-screen{color:#fff0c3;background-color:#15362a;font-family:system-ui,'Microsoft JhengHei',sans-serif}
-.boot-scene{position:relative;width:100%;height:100%;isolation:isolate;background:url('./assets/cover/forest-standard.webp') center/cover no-repeat}
-.boot-scene:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#0b241bca 0%,#102b2090 28%,#102b2020 52%,transparent 70%),linear-gradient(0deg,#10291c55,transparent 30%)}
-.boot-content{position:absolute;left:5%;top:50%;transform:translateY(-50%);width:42%;text-align:center;text-shadow:0 2px 8px #09211980}
-.boot-crest{display:block;width:106px;height:49px;margin:0 auto 12px;color:#e6d49a}
-#boot-screen h1{font-family:CoverSerif,serif;font-weight:500;font-size:clamp(39px,6.4vw,96px);letter-spacing:.08em;line-height:1.2;margin:0;white-space:nowrap}
-.boot-subtitle{font-family:Georgia,serif;font-size:clamp(10px,1.4vw,18px);letter-spacing:.35em;margin:10px 0 17px;padding-left:.35em;color:#e7d6a6}
-.boot-rule{display:flex;align-items:center;justify-content:center;gap:12px;color:#dfc990;font-size:16px}.boot-rule:before,.boot-rule:after{content:'';width:25%;height:1px;background:linear-gradient(90deg,transparent,#d7bf7d)}.boot-rule:after{transform:rotate(180deg)}
-.boot-status{margin:34px 0 0;display:flex;justify-content:center;align-items:center;gap:12px;font-size:clamp(16px,2.2vw,27px);font-weight:500;letter-spacing:.09em;color:#fff4d4}
-.boot-spinner{width:19px;height:19px;border:2px solid #dcc78c40;border-top-color:#f8e0a0;border-right-color:#f8e0a0;border-radius:50%;animation:spin 1.6s linear infinite;flex:none}
-.boot-hint{font-size:clamp(12px,1.5vw,18px);line-height:1.7;margin:12px 0 0;color:#e1e4cd;letter-spacing:.05em}
-.boot-footer{position:absolute;bottom:6%;left:5%;width:42%;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 10px;text-align:center;font-size:clamp(11px,1.4vw,17px);letter-spacing:.05em;color:#e8e3c8ed;margin:0}
-.boot-tip-label{display:inline-flex;align-items:center;gap:5px;flex:none;padding-right:10px;border-right:1px solid #d8c08766;color:#e6cc8e;font-family:system-ui,sans-serif;font-size:.82em;font-weight:600;letter-spacing:.16em;line-height:1.3}
-.boot-tip-label svg{width:1em;height:1em;flex:none;opacity:.9}
-.boot-skill-name{color:#fff4c6;font-weight:700;text-shadow:0 1px 3px #092119,0 0 8px #f5d88940}
-@keyframes spin{to{transform:rotate(360deg)}}
-@media(min-aspect-ratio:2/1){.boot-scene{background-image:url('./assets/cover/forest-wide.webp')}}
-@media(max-height:350px) and (orientation:landscape){.boot-crest{height:30px;margin-bottom:8px}.boot-status{margin-top:20px}.boot-subtitle{margin:5px 0 10px}.boot-hint{margin-top:8px}.boot-footer{bottom:4%}}
-@media(orientation:portrait){.boot-scene{background-size:auto 65%;background-position:76% top;background-color:#15362a}.boot-scene:before{background:linear-gradient(0deg,#15362a 30%,#15362af0 40%,transparent 72%)}.boot-content{left:7%;width:86%;top:auto;bottom:12%;transform:none}.boot-crest{height:38px;margin-bottom:10px}#boot-screen h1{font-size:clamp(38px,11vw,64px)}.boot-status{margin-top:28px;font-size:19px}.boot-hint{font-size:13px}.boot-footer{left:7%;width:86%;bottom:5%;font-size:11px}.boot-subtitle{font-size:11px}}
-@media(prefers-reduced-motion:reduce){.boot-spinner{animation:none}}
-
-#boot-screen{position:fixed;inset:0;z-index:9000;isolation:isolate}#boot-screen .boot-spinner{will-change:transform;transform:translateZ(0);animation:boot-spin 1.6s linear infinite} @keyframes boot-spin{from{transform:translateZ(0) rotate(0deg)}to{transform:translateZ(0) rotate(360deg)}}
-body.booting #app{visibility:hidden}body.booting #update-panel,body.booting #tutorial-panel{z-index:9001}#boot-screen button{padding:10px 20px;background:#173b2e;color:#fff0c3;border:1px solid #d7bf7d;border-radius:8px}#boot-screen .boot-retry[hidden]{display:none}
-
-#boot-screen{display:block;margin:0;padding:0;max-width:none;overflow:hidden}#boot-screen .boot-start{position:absolute;inset:0;z-index:3;width:100%;height:100%;max-width:none;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;cursor:pointer;opacity:1}#boot-screen .boot-start:focus-visible{outline:2px solid #ead79c;outline-offset:-8px}#boot-screen .boot-spinner[hidden]{display:none}
-
-/* Cover typography trial: preserve the brand, clarify the start prompt. */
-#boot-screen .boot-subtitle{letter-spacing:.315em;padding-left:.315em}
-#boot-screen .boot-status{font-family:'Microsoft JhengHei',system-ui,sans-serif;font-size:clamp(18px,2.42vw,30px);font-weight:500;letter-spacing:.04em;line-height:1.4}
-#boot-screen .boot-hint{font-family:'Noto Serif TC','PMingLiU',serif;color:#d2c8a6;margin-top:9px;font-weight:400}
-#boot-screen #boot-suggestion{font-family:'Microsoft JhengHei',system-ui,sans-serif;font-weight:400;letter-spacing:.025em}
-#boot-screen .boot-skill-name{font-weight:700}
-@media(orientation:portrait){#boot-screen .boot-status{font-size:21px}}
-
-/* Lift the prompt pair without shifting the title or footer. */
-#boot-screen .boot-status,#boot-screen .boot-hint{transform:translateY(-8px)}
-#boot-screen[aria-busy="false"] #boot-status{animation:boot-start-pulse 2s ease-in-out infinite;will-change:opacity}
-@keyframes boot-start-pulse{0%,100%{opacity:1}50%{opacity:.45}}
-@media(prefers-reduced-motion:reduce){#boot-screen[aria-busy="false"] #boot-status{animation:none;will-change:auto}}
+#boot-screen{position:fixed;inset:0;z-index:9000;isolation:isolate;margin:0;padding:0;max-width:none;color:#142741;background:#7fc9ed;--boot-group-width:min(36vw,360px);--boot-safe-left:max(16px,calc(env(safe-area-inset-left,0px) + 12px));--boot-safe-right:max(16px,calc(env(safe-area-inset-right,0px) + 12px));font-family:system-ui,'Microsoft JhengHei',sans-serif;overflow-x:hidden;overflow-y:auto}
+#boot-screen [hidden]{display:none!important}
+.boot-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:-1;pointer-events:none}
+.boot-content{position:absolute;left:77%;top:max(max(16px,calc(env(safe-area-inset-top,0px) + 12px)),calc(50dvh - 110px));transform:translateX(-50%);width:var(--boot-group-width);max-width:calc(100vw - var(--boot-safe-left) - var(--boot-safe-right));text-align:center}
+.boot-logo{display:block;width:clamp(180px,27vw,248px);max-width:82%;height:auto;margin:0 auto 24px}
+#boot-brand-fallback{margin-bottom:24px;text-align:center}#boot-brand-fallback h1{font-size:28px;line-height:1.2;font-weight:600;margin:0}#boot-brand-fallback p{font-size:11px;line-height:1.4;margin:6px 0}
+.boot-card{position:relative;isolation:isolate;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;min-height:0;text-align:left}
+.boot-card::before{content:'';position:absolute;inset:-18px -24px -18px;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,rgba(255,248,232,.66) 0%,rgba(255,248,232,.42) 50%,rgba(255,248,232,.14) 68%,rgba(255,248,232,0) 82%)}
+.boot-status-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.boot-status{font-size:17px;font-weight:600;line-height:1.45;margin:0}
+.boot-count{color:#35516a;font-size:13px;line-height:1.4;font-variant-numeric:tabular-nums;white-space:nowrap}
+.boot-hint{font-size:14px;line-height:1.5;margin:6px 0 0;color:#35516a}
+.boot-progress-space{height:8px;margin-top:12px}
+.boot-progress{height:5px;overflow:hidden;border-radius:3px;background:rgba(20,39,65,.18)}
+.boot-progress-fill{display:block;height:100%;background:#315b78;border-radius:3px;width:0;transition:none}
+.boot-indeterminate .boot-progress-fill{width:35%;animation:boot-sweep 1.4s linear infinite}
+@keyframes boot-sweep{from{transform:translateX(-100%)}to{transform:translateX(290%)}}
+#boot-screen[data-phase="failed"] .boot-status{color:#943e36}
+#boot-screen[data-phase="failed"] .boot-progress-fill,#boot-screen[data-phase="stalled"] .boot-progress-fill{animation:none;transition:none}
+#boot-screen .boot-retry{display:block;min-height:46px;margin:12px 0 0;padding:10px 18px;border:1px solid #142741;border-radius:8px;background:#315b78;color:#f8ecd3;font:700 16px/1.4 system-ui;cursor:pointer}
+#boot-screen button:focus-visible{outline:3px solid #efbd60;outline-offset:3px}
+.boot-footer{display:flex;justify-content:flex-start;align-items:baseline;gap:8px;line-height:1.5;margin:14px 0 0;padding-top:10px;border-top:1px solid rgba(20,39,65,.16);font-size:13px;color:#35516a}
+.boot-tip-label{font-size:11px;font-weight:600;letter-spacing:.1em;padding-top:0}.boot-skill-name{font-weight:700}
+#boot-screen[data-phase="ready"] .boot-count{display:none}
+body.booting #app{visibility:hidden}body.booting #update-panel,body.booting #tutorial-panel{z-index:9001}
+body:has(#update-panel:not([hidden])) .boot-footer,body:has(#tutorial-panel:not([hidden])) .boot-footer{display:none}
+#boot-screen .boot-start{position:absolute;inset:0;z-index:3;width:100%;height:100%;max-width:none;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;cursor:pointer}
+#boot-screen .boot-start:focus-visible{outline-offset:-8px}
+@media(max-width:720px) and (orientation:landscape){#boot-screen{--boot-group-width:40vw}.boot-logo{margin-bottom:20px}#boot-brand-fallback{margin-bottom:20px}.boot-status-row{gap:8px}.boot-status{font-size:16px}.boot-hint{font-size:13px}}
+@media(max-height:350px) and (orientation:landscape){.boot-footer{display:none}.boot-content{padding-bottom:max(16px,env(safe-area-inset-bottom,0px))}}
+@media(orientation:landscape){.boot-content{left:clamp(calc(var(--boot-safe-left) + (var(--boot-group-width) / 2)),77vw,calc(100vw - var(--boot-safe-right) - (var(--boot-group-width) / 2)))}}
+@media(max-height:300px) and (orientation:landscape){.boot-content{top:max(12px,calc(env(safe-area-inset-top,0px) + 8px))}.boot-logo{width:min(150px,72%);margin-bottom:12px}#boot-brand-fallback{margin-bottom:12px}.boot-status{font-size:16px}.boot-hint{font-size:13px}#boot-screen[data-phase="failed"] .boot-count,#boot-screen[data-phase="stalled"] .boot-count{margin-left:auto}}
+@media(orientation:portrait){#boot-screen{background:#c3dded}.boot-art{height:62dvh;object-fit:cover;object-position:31% top}.boot-content{left:50%;top:62dvh;transform:translateX(-50%);width:min(calc(100vw - 40px),360px);padding:0 0 20px}.boot-logo{width:220px}.boot-scene:after{content:'';position:absolute;top:54dvh;height:8dvh;left:0;right:0;background:linear-gradient(transparent,#c3dded);z-index:-1}}
+@media(prefers-reduced-motion:reduce){#boot-screen .boot-progress-fill{animation:none!important;transition:none!important}.boot-indeterminate .boot-progress-fill{width:35%;transform:none}}
 
 /* The orientation guard loads with the lightweight shell, before the game bundle. */
 .web-install-guide{margin:20px 0 0;border:1px solid #d7bf7d55;border-radius:12px;background:#112e26;text-align:left;color:#f4edd6;font-size:13px;line-height:1.7;letter-spacing:0}
